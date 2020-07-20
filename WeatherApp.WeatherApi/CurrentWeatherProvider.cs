@@ -8,6 +8,9 @@ using WeatherApp.WeatherApi.Models;
 
 namespace WeatherApp.WeatherApi
 {
+    /// <summary>
+    /// Current weather data provider
+    /// </summary>
     public class CurrentWeatherProvider : WeatherProvider
     {
         public CurrentWeatherProvider() : base("current.json")
@@ -15,6 +18,11 @@ namespace WeatherApp.WeatherApi
 
         }
 
+        /// <summary>
+        /// Performs current weather request for specified location
+        /// </summary>
+        /// <param name="cityName">city</param>
+        /// <returns>Current weather info</returns>
         public async Task<CurrentWeatherApiResponse> GetCurrentWeather(string cityName)
         {
             var jsonString = await DoGet(cityName);

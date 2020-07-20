@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 using System.Configuration;
 using System.Threading;
 using System.Web.UI.WebControls;
-using WeatherAPI.Standard;
-using WeatherAPI.Standard.Models;
 using WeatherApp.Data;
 using WeatherApp.Service.Config;
+using WeatherApp.WeatherApi;
+using WeatherApp.WeatherApi.Models;
 
 namespace WeatherApp.Service
 {
     public partial class WeatherApiService : ServiceBase
     {
-        private WeatherAPIClient _apiClient;
+        private CurrentWeatherProvider _apiClient;
         private DataContext _dataContext; 
         private CancellationTokenSource _cancellationTokenSource;
 
@@ -27,8 +27,7 @@ namespace WeatherApp.Service
         {
             InitializeComponent();
 
-            var apiKey = ConfigurationManager.AppSettings.Get("apiKey");
-            _apiClient = new WeatherAPIClient(apiKey);
+            _apiClient = new CurrentWeatherProvider();
             _dataContext = new DataContext();
 
             _cancellationTokenSource = new CancellationTokenSource();
@@ -40,11 +39,10 @@ namespace WeatherApp.Service
             new Task(async () =>
             {
                 var cities = (CityCollection)ConfigurationManager.GetSection("locations");
-                var weatherConditions = new List<CurrentJsonResponse>();
+                var weatherConditions = new List<CurrentWeatherApiResponse>();
                 foreach (City city in cities)
                 {
-                    var weather = await _apiClient.APIs.GetRealtimeWeatherAsync(city.Key, "ru-RU");
-                    
+                    var weather = await _apiClient.GetCurrentWeather(city.Key);
                 }
                 Thread.Sleep(60 * 60 * 100);
             }, _cancellationTokenSource.Token).Start();

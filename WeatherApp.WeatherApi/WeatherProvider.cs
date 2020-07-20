@@ -14,14 +14,14 @@ namespace WeatherApp.WeatherApi
 {
     public abstract class WeatherProvider
     {
-        private string _language;
+        private string _lang;
         private string _apiKey;
         private HttpClient _client;
 
         protected WeatherProvider(string controller)
         {
             _apiKey = ConfigurationManager.AppSettings.Get("apiKey");
-            _language = ConfigurationManager.AppSettings.Get("apiLang");
+            _lang = ConfigurationManager.AppSettings.Get("apiLang");
 
             var baseUrl = new Uri(ConfigurationManager.AppSettings.Get("apiBaseUrl") + controller);
             _client = new HttpClient()
@@ -34,14 +34,20 @@ namespace WeatherApp.WeatherApi
 
 
         /// <summary>
-        /// Performs get request to api base url for city 
+        /// Performs get request to api base url for city with preconfigured base address, apiKey and lang
         /// </summary>
         /// <param name="city">city</param>
+        /// <param name="optionalArgs">optional args</param>
         /// <returns>string json object</returns>
-        protected async Task<string> DoGet(string city)
+        protected async Task<string> DoGet(string city, string optionalArgs = "")
         {
             var uriBuilder = new UriBuilder(_client.BaseAddress);
-            string args = $"key={_apiKey}&q={city}";
+
+            string args = $"key={_apiKey}&q={city}&lang={_lang}";
+
+            if (!string.IsNullOrEmpty(optionalArgs))
+                args += $"&{optionalArgs}";
+
             uriBuilder.Query = args;
 
             var response = _client.GetAsync(uriBuilder.Uri).Result;

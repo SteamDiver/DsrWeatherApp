@@ -97,6 +97,10 @@
       <Project>{AE6D5F5B-9C13-4FB2-BF5D-5ABC5EB2480A}</Project>
       <Name>WeatherApp.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WeatherApp.WeatherApi\WeatherApp.WeatherApi.csproj">
+      <Project>{198D0A95-14FF-42C1-B4B7-A4889080FB57}</Project>
+      <Name>WeatherApp.WeatherApi</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
