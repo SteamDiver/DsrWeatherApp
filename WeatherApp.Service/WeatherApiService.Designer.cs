@@ -1,6 +1,6 @@
 ﻿namespace WeatherApp.Service
 {
-    partial class Service1
+    partial class WeatherApiService
     {
         /// <summary> 
         /// Обязательная переменная конструктора.
