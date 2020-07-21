@@ -28,13 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.EventLog = new System.Diagnostics.EventLog();
+            ((System.ComponentModel.ISupportInitialize)(this.EventLog)).BeginInit();
             // 
-            // Service1
+            // WeatherApiService
             // 
             this.ServiceName = "WeatherAppService";
+            ((System.ComponentModel.ISupportInitialize)(this.EventLog)).EndInit();
 
         }
 
         #endregion
+
+        private System.Diagnostics.EventLog EventLog;
     }
 }

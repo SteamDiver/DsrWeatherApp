@@ -14,5 +14,10 @@ namespace WeatherApp.WeatherApi.Models
         /// </summary>
         [JsonProperty(PropertyName = "location")]
         public Location Location { get; set; }
+
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 }
