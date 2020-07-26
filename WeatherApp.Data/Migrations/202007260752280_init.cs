@@ -8,7 +8,7 @@
         public override void Up()
         {
             CreateTable(
-                "dbo.CurrentWeather",
+                "dbo.CurrentWeathers",
                 c => new
                     {
                         City = c.String(nullable: false, maxLength: 128),
@@ -26,7 +26,7 @@
         
         public override void Down()
         {
-            DropTable("dbo.CurrentWeather");
+            DropTable("dbo.CurrentWeathers");
         }
     }
 }

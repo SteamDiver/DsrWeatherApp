@@ -52,9 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContext.cs" />
-    <Compile Include="Migrations\202007210800203_init.cs" />
-    <Compile Include="Migrations\202007210800203_init.designer.cs">
-      <DependentUpon>202007210800203_init.cs</DependentUpon>
+    <Compile Include="Migrations\202007260752280_init.cs" />
+    <Compile Include="Migrations\202007260752280_init.designer.cs">
+      <DependentUpon>202007260752280_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CurrentWeather.cs" />
@@ -65,8 +65,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202007210800203_init.resx">
-      <DependentUpon>202007210800203_init.cs</DependentUpon>
+    <Folder Include="Database\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202007260752280_init.resx">
+      <DependentUpon>202007260752280_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

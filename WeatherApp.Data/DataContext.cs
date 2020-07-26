@@ -10,9 +10,11 @@ namespace WeatherApp.Data
 {
     public class DataContext : DbContext 
     {
-        public DataContext() : base("DbConnection")
+        public DataContext()
+            : base(@"Data Source=localhost;Initial Catalog=WeatherAppDb;Integrated Security=True")
         {
         }
-        public DbSet<CurrentWeather> CurrentWeather { get; set; }
+
+        public virtual DbSet<CurrentWeather> CurrentWeather { get; set; }
     }
 }

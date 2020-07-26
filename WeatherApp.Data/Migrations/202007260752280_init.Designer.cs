@@ -13,7 +13,7 @@ namespace WeatherApp.Data.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202007210800203_init"; }
+            get { return "202007260752280_init"; }
         }
         
         string IMigrationMetadata.Source

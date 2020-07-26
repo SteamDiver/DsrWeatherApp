@@ -1,20 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.ServiceProcess;
-using System.Text;
 using System.Threading.Tasks;
 using System.Configuration;
 using System.Threading;
-using System.Web.UI.WebControls;
 using WeatherApp.Data;
 using WeatherApp.Service.Config;
 using WeatherApp.WeatherApi;
 using WeatherApp.WeatherApi.Models;
-using System.Data.Entity;
 using System.Data.Entity.Migrations;
 
 namespace WeatherApp.Service
@@ -22,7 +14,6 @@ namespace WeatherApp.Service
     public partial class WeatherApiService : ServiceBase
     {
         private readonly CurrentWeatherProvider _apiClient;
-        private readonly DataContext _dataContext;
         private readonly CancellationTokenSource _cancellationTokenSource;
 
         public WeatherApiService()
@@ -30,8 +21,6 @@ namespace WeatherApp.Service
             InitializeComponent();
 
             _apiClient = new CurrentWeatherProvider();
-            _dataContext = new DataContext();
-
             _cancellationTokenSource = new CancellationTokenSource();
 
             EventLog = new EventLog();
@@ -45,7 +34,6 @@ namespace WeatherApp.Service
             EventLog.Log = "";
         }
 
-        //TODO Add weather report timestamp to db and dto model
         protected override void OnStart(string[] args)
         {
             Debugger.Launch();
@@ -61,7 +49,7 @@ namespace WeatherApp.Service
                     await UpdateDb(weather);
                 }
 
-                Thread.Sleep(60 * 60 * 100);
+                Thread.Sleep(60 * 60 * 1000);
             }, _cancellationTokenSource.Token).Start();
         }
 
@@ -72,19 +60,22 @@ namespace WeatherApp.Service
 
         private async Task UpdateDb(CurrentWeatherApiResponse response)
         {
-            _dataContext.CurrentWeather.AddOrUpdate(new Data.Models.CurrentWeather()
+            using (var dataContext = new DataContext())
             {
-                City = response.Location.Name,
-                Temperature = response.CurrentWeather.Temperature,
-                Humidity = response.CurrentWeather.Humidity,
-                Pressure = response.CurrentWeather.Pressure,
-                CondText = response.CurrentWeather.Condition.Text,
-                CondIcon = response.CurrentWeather.Condition.Icon,
-                WindDir = response.CurrentWeather.WindDir,
-                WindSpeed = response.CurrentWeather.WindSpeed
-            });
+                dataContext.CurrentWeather.AddOrUpdate(new Data.Models.CurrentWeather()
+                {
+                    City = response.Location.Name,
+                    Temperature = response.CurrentWeather.Temperature,
+                    Humidity = response.CurrentWeather.Humidity,
+                    Pressure = response.CurrentWeather.Pressure,
+                    CondText = response.CurrentWeather.Condition.Text,
+                    CondIcon = response.CurrentWeather.Condition.Icon,
+                    WindDir = response.CurrentWeather.WindDir,
+                    WindSpeed = response.CurrentWeather.WindSpeed
+                });
 
-            await _dataContext.SaveChangesAsync();
+                await dataContext.SaveChangesAsync();
+            }
         }
     }
 }
