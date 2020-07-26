@@ -34,7 +34,7 @@ namespace WeatherApp.Service
 
         protected override void OnStart(string[] args)
         {
-            Debugger.Launch();
+            //Debugger.Launch();
             new Task(async () =>
             {
                 var cities = (LocationConfigurationSection) ConfigurationManager.GetSection("locations");

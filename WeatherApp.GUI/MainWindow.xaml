@@ -6,5 +6,22 @@
         xmlns:local="clr-namespace:WeatherApp.GUI"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid />
+    <Grid>
+        <TabControl Margin="10,39,9.6,10">
+            <TabItem Header="Данные">
+                <Grid Background="#FFE5E5E5" >
+                    <DataGrid Margin="0,0,-0.2,0.2"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Статистика">
+                <Grid Background="#FFE5E5E5" />
+            </TabItem>
+        </TabControl>
+        <Button HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="128" Height="24">
+            <StackPanel Orientation="Horizontal" >
+                <Image Source="Resources/Icons/Refresh.png" Height="18" Width="18" VerticalAlignment="Center" />
+                <TextBlock Margin="8,0,0,0">Обновить</TextBlock>
+            </StackPanel>
+        </Button>
+    </Grid>
 </Window>
