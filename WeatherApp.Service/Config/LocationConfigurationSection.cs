@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Configuration;
 
 namespace WeatherApp.Service.Config
 {
     public class LocationConfigurationSection : ConfigurationSection
     {
-        [ConfigurationProperty("сities")]
-        public CityCollection Locations => (CityCollection) base["сities"];
+        [ConfigurationProperty("сities")] public CityCollection Locations => (CityCollection) base["сities"];
     }
 }

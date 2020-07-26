@@ -1,13 +1,13 @@
-﻿using System.Diagnostics;
+﻿using System.Configuration;
+using System.Data.Entity.Migrations;
+using System.Diagnostics;
 using System.ServiceProcess;
-using System.Threading.Tasks;
-using System.Configuration;
 using System.Threading;
+using System.Threading.Tasks;
 using WeatherApp.Data;
+using WeatherApp.Data.Models;
 using WeatherApp.Service.Config;
 using WeatherApp.WeatherApi;
-using WeatherApp.WeatherApi.Models;
-using System.Data.Entity.Migrations;
 
 namespace WeatherApp.Service
 {
@@ -25,10 +25,8 @@ namespace WeatherApp.Service
 
             EventLog = new EventLog();
             if (!EventLog.SourceExists("WeatherAppService"))
-            {
                 EventLog.CreateEventSource(
                     "WeatherAppService", "");
-            }
 
             EventLog.Source = "WeatherAppService";
             EventLog.Log = "";
@@ -43,10 +41,23 @@ namespace WeatherApp.Service
 
                 foreach (City city in cities.Locations)
                 {
-                    var weather = await _apiClient.GetCurrentWeather(city.Key);
-                    EventLog.WriteEntry($"Data received: {weather}");
+                    var response = await _apiClient.GetCurrentWeather(city.Key);
+                    EventLog.WriteEntry($"Data received: {response}");
 
-                    await UpdateDb(weather);
+                    var cityReport = new CurrentWeather
+                    {
+                        City = response.Location.Name,
+                        CityName = city.Text,
+                        Temperature = response.CurrentWeather.Temperature,
+                        Humidity = response.CurrentWeather.Humidity,
+                        Pressure = response.CurrentWeather.Pressure,
+                        CondText = response.CurrentWeather.Condition.Text,
+                        CondIcon = response.CurrentWeather.Condition.Icon,
+                        WindDir = response.CurrentWeather.WindDir,
+                        WindSpeed = response.CurrentWeather.WindSpeed
+                    };
+
+                    await UpdateDb(cityReport);
                 }
 
                 Thread.Sleep(60 * 60 * 1000);
@@ -58,22 +69,11 @@ namespace WeatherApp.Service
             _cancellationTokenSource.Cancel();
         }
 
-        private async Task UpdateDb(CurrentWeatherApiResponse response)
+        private async Task UpdateDb(CurrentWeather report)
         {
             using (var dataContext = new DataContext())
             {
-                dataContext.CurrentWeather.AddOrUpdate(new Data.Models.CurrentWeather()
-                {
-                    City = response.Location.Name,
-                    Temperature = response.CurrentWeather.Temperature,
-                    Humidity = response.CurrentWeather.Humidity,
-                    Pressure = response.CurrentWeather.Pressure,
-                    CondText = response.CurrentWeather.Condition.Text,
-                    CondIcon = response.CurrentWeather.Condition.Icon,
-                    WindDir = response.CurrentWeather.WindDir,
-                    WindSpeed = response.CurrentWeather.WindSpeed
-                });
-
+                dataContext.CurrentWeather.AddOrUpdate(report);
                 await dataContext.SaveChangesAsync();
             }
         }

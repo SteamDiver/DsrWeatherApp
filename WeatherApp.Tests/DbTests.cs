@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,15 +20,15 @@ namespace WeatherApp.Tests
                 await dataContext.SaveChangesAsync();
 
                 var cityName = Guid.NewGuid().ToString();
-                var weather = new CurrentWeather()
+                var weather = new CurrentWeather
                 {
-                    City = cityName,
+                    City = cityName
                 };
 
                 dataContext.CurrentWeather.AddOrUpdate(weather);
                 await dataContext.SaveChangesAsync();
 
-                Assert.IsTrue(dataContext.CurrentWeather.Any(w=>w.City == cityName));
+                Assert.IsTrue(dataContext.CurrentWeather.Any(w => w.City == cityName));
 
                 dataContext.CurrentWeather.RemoveRange(dataContext.CurrentWeather);
                 await dataContext.SaveChangesAsync();

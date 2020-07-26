@@ -1,22 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
-using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Security.Policy;
-using System.Text;
 using System.Threading.Tasks;
-using WeatherApp.WeatherApi.Models;
 
 namespace WeatherApp.WeatherApi
 {
     public abstract class WeatherProvider
     {
-        private string _lang;
-        private string _apiKey;
-        private HttpClient _client;
+        private readonly string _apiKey;
+        private readonly HttpClient _client;
+        private readonly string _lang;
 
         protected WeatherProvider(string controller)
         {
@@ -24,7 +18,7 @@ namespace WeatherApp.WeatherApi
             _lang = ConfigurationManager.AppSettings.Get("apiLang");
 
             var baseUrl = new Uri(ConfigurationManager.AppSettings.Get("apiBaseUrl") + controller);
-            _client = new HttpClient()
+            _client = new HttpClient
             {
                 BaseAddress = baseUrl
             };
@@ -34,7 +28,7 @@ namespace WeatherApp.WeatherApi
 
 
         /// <summary>
-        /// Performs get request to api base url for city with preconfigured base address, apiKey and lang
+        ///     Performs get request to api base url for city with preconfigured base address, apiKey and lang
         /// </summary>
         /// <param name="city">city</param>
         /// <param name="optionalArgs">optional args</param>
@@ -43,7 +37,7 @@ namespace WeatherApp.WeatherApi
         {
             var uriBuilder = new UriBuilder(_client.BaseAddress);
 
-            string args = $"key={_apiKey}&q={city}&lang={_lang}";
+            var args = $"key={_apiKey}&q={city}&lang={_lang}";
 
             if (!string.IsNullOrEmpty(optionalArgs))
                 args += $"&{optionalArgs}";
@@ -55,11 +49,9 @@ namespace WeatherApp.WeatherApi
             {
                 return await response.Content.ReadAsStringAsync();
             }
-            else
-            {
-                Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
-                return null;
-            }
+
+            Console.WriteLine("{0} ({1})", (int) response.StatusCode, response.ReasonPhrase);
+            return null;
         }
     }
 }

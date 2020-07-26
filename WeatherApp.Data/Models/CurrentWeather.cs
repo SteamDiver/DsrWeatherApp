@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace WeatherApp.Data.Models
 {
     public class CurrentWeather
     {
-        [Key]
-        public string City { get; set; }
+        [Key] public string City { get; set; }
+
+        public string CityName { get; set; }
         public decimal Temperature { get; set; }
         public decimal Humidity { get; set; }
         public decimal Pressure { get; set; }
@@ -18,6 +14,5 @@ namespace WeatherApp.Data.Models
         public string CondIcon { get; set; }
         public decimal WindSpeed { get; set; }
         public string WindDir { get; set; }
-
     }
 }
