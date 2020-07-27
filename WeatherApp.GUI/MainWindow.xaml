@@ -10,7 +10,15 @@
         <TabControl Margin="10,39,9.6,10">
             <TabItem Header="Данные">
                 <Grid Background="#FFE5E5E5" >
-                    <DataGrid Margin="0,0,-0.2,0.2"/>
+                    <DataGrid ItemsSource="{Binding Source=Weathers}"  AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Город" Binding="{Binding ID}"/>
+                            <DataGridTextColumn Header="Температура" Binding="{Binding Date}"/>
+                            <DataGridTextColumn Header="Давление" Binding="{Binding Date}"/>
+                            <DataGridTextColumn Header="Влажность" Binding="{Binding Date}"/>
+
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
             </TabItem>
             <TabItem Header="Статистика">

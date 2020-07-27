@@ -37,30 +37,33 @@ namespace WeatherApp.Service
             //Debugger.Launch();
             new Task(async () =>
             {
-                var cities = (LocationConfigurationSection) ConfigurationManager.GetSection("locations");
-
-                foreach (City city in cities.Locations)
+                while (true)
                 {
-                    var response = await _apiClient.GetCurrentWeather(city.Key);
-                    EventLog.WriteEntry($"Data received: {response}");
+                    var cities = (LocationConfigurationSection) ConfigurationManager.GetSection("locations");
 
-                    var cityReport = new CurrentWeather
+                    foreach (City city in cities.Locations)
                     {
-                        City = response.Location.Name,
-                        CityName = city.Text,
-                        Temperature = response.CurrentWeather.Temperature,
-                        Humidity = response.CurrentWeather.Humidity,
-                        Pressure = response.CurrentWeather.Pressure,
-                        CondText = response.CurrentWeather.Condition.Text,
-                        CondIcon = response.CurrentWeather.Condition.Icon,
-                        WindDir = response.CurrentWeather.WindDir,
-                        WindSpeed = response.CurrentWeather.WindSpeed
-                    };
+                        var response = await _apiClient.GetCurrentWeather(city.Key);
+                        EventLog.WriteEntry($"Data received: {response}");
 
-                    await UpdateDb(cityReport);
+                        var cityReport = new CurrentWeather
+                        {
+                            City = response.Location.Name,
+                            CityName = city.Text,
+                            Temperature = response.CurrentWeather.Temperature,
+                            Humidity = response.CurrentWeather.Humidity,
+                            Pressure = response.CurrentWeather.Pressure,
+                            CondText = response.CurrentWeather.Condition.Text,
+                            CondIcon = response.CurrentWeather.Condition.Icon,
+                            WindDir = response.CurrentWeather.WindDir,
+                            WindSpeed = response.CurrentWeather.WindSpeed
+                        };
+
+                        await UpdateDb(cityReport);
+                    }
+
+                    Thread.Sleep(60 * 60 * 1000);
                 }
-
-                Thread.Sleep(60 * 60 * 1000);
             }, _cancellationTokenSource.Token).Start();
         }
 
