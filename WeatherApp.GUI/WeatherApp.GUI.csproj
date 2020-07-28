@@ -66,6 +66,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\PieChartWeatherDataConverter.cs" />
+    <Compile Include="Converters\BarChartWeatherLabelsConverter.cs" />
+    <Compile Include="Converters\BarChartWeatherDataConverter.cs" />
     <Compile Include="ChartControls\BarChartControl.xaml.cs">
       <DependentUpon>BarChartControl.xaml</DependentUpon>
     </Compile>

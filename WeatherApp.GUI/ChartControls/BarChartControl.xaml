@@ -6,14 +6,15 @@
              xmlns:local="clr-namespace:WeatherApp.GUI.ChartControls"
              xmlns:wpf="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             x:Name="BarChart">
     <Grid>
-        <wpf:CartesianChart Series="{Binding SeriesCollection}" LegendLocation="Left">
+        <wpf:CartesianChart Series="{Binding BarSeriesCollection, ElementName=BarChart}" LegendLocation="Right">
             <wpf:CartesianChart.AxisX>
-                <wpf:Axis Title="Salesman" Labels="{Binding Labels}" />
+                <wpf:Axis Title="Температура" Labels="{Binding BarLabels, ElementName=BarChart}" />
             </wpf:CartesianChart.AxisX>
             <wpf:CartesianChart.AxisY>
-                <wpf:Axis Title="Sold Apps" LabelFormatter="{Binding Formatter}" />
+                <wpf:Axis Title="Count" LabelFormatter="{Binding Formatter}" />
             </wpf:CartesianChart.AxisY>
         </wpf:CartesianChart>
     </Grid>

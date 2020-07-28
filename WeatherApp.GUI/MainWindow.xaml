@@ -4,8 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:chartControls="clr-namespace:WeatherApp.GUI.ChartControls"
+        xmlns:converters="clr-namespace:WeatherApp.GUI.Converters"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <converters:BarChartWeatherDataConverter x:Key="BarChartWeatherDataConverter" />
+        <converters:PieChartWeatherDataConverter x:Key="PieChartWeatherDataConverter" />
+        <converters:BarChartWeatherLabelsConverter x:Key="BarChartWeatherLabelsConverter"/>
+    </Window.Resources>
     <Grid>
         <TabControl Margin="10,10,9.6,10">
             <TabItem Header="Данные">
@@ -51,7 +57,9 @@
                         <ComboBoxItem>Круговая</ComboBoxItem>
                     </ComboBox>
 
-                    <chartControls:BarChartControl Margin="11.6,10,-0.2,0" Grid.Column="1">
+                    <chartControls:BarChartControl Margin="11.6,10,-0.2,0" Grid.Column="1" 
+                                                   BarSeriesCollection="{Binding Weathers, Converter={StaticResource BarChartWeatherDataConverter}}"
+                                                   BarLabels="{Binding Weathers, Converter={StaticResource BarChartWeatherLabelsConverter}}">
                         <chartControls:BarChartControl.Style>
                             <Style TargetType="{x:Type chartControls:BarChartControl}">
                                 <Style.Triggers>
@@ -69,7 +77,8 @@
                             </Style>
                         </chartControls:BarChartControl.Style>
                     </chartControls:BarChartControl>
-                    <chartControls:PieChartControl Margin="0,63,-0.2,0" Grid.Column="1">
+                    <chartControls:PieChartControl Margin="0,63,-0.2,0" Grid.Column="1"
+                                                   PieSeriesCollection="{Binding Weathers, Converter={StaticResource PieChartWeatherDataConverter}}">
                         <chartControls:PieChartControl.Style>
                             <Style TargetType="{x:Type chartControls:PieChartControl}">
                                 <Style.Triggers>
@@ -97,9 +106,6 @@
                                          VerticalAlignment="Top" />
                         </StackPanel>
                     </GroupBox>
-                    <Label Grid.Column="0" Content="Интервал" Margin="10,168,10,0" VerticalAlignment="Top" />
-                    <TextBox Grid.Column="0" Height="23" Margin="10,194,10.4,0" TextWrapping="Wrap" Text=""
-                             VerticalAlignment="Top" />
                 </Grid>
             </TabItem>
         </TabControl>

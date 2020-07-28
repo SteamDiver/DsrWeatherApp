@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using System.Windows.Controls;
 using LiveCharts;
 using LiveCharts.Wpf;
@@ -13,14 +14,18 @@ namespace WeatherApp.GUI.ChartControls
         public PieChartControl()
         {
             InitializeComponent();
-
-            PointLabel = chartPoint =>
-                $"{chartPoint.Y} ({chartPoint.Participation:P})";
-
-            DataContext = this;
         }
 
-        public Func<ChartPoint, string> PointLabel { get; set; }
+        public static readonly DependencyProperty DataProperty =
+            DependencyProperty.Register("PieSeriesCollection", typeof(SeriesCollection),
+                typeof(PieChartControl), new FrameworkPropertyMetadata(null));
+        
+        public SeriesCollection PieSeriesCollection
+        {
+            get => (SeriesCollection)GetValue(DataProperty);
+            set => SetValue(DataProperty, value);
+        }
+
 
         private void Chart_OnDataClick(object sender, ChartPoint chartpoint)
         {
