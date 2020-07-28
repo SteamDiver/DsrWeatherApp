@@ -45,10 +45,7 @@ namespace WeatherApp.WeatherApi
             uriBuilder.Query = args;
 
             var response = _client.GetAsync(uriBuilder.Uri).Result;
-            if (response.IsSuccessStatusCode)
-            {
-                return await response.Content.ReadAsStringAsync();
-            }
+            if (response.IsSuccessStatusCode) return await response.Content.ReadAsStringAsync();
 
             Console.WriteLine("{0} ({1})", (int) response.StatusCode, response.ReasonPhrase);
             return null;

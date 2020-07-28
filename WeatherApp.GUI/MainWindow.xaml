@@ -3,36 +3,104 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WeatherApp.GUI"
+        xmlns:chartControls="clr-namespace:WeatherApp.GUI.ChartControls"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <TabControl Margin="10,10,9.6,10">
             <TabItem Header="Данные">
-                <Grid Background="#FFE5E5E5" >
-                    <DataGrid ItemsSource="{Binding Weathers}"  AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" CanUserReorderColumns="False" CanUserResizeColumns="False" Margin="0,23,-0.2,0.2">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid ItemsSource="{Binding Weathers}" AutoGenerateColumns="False" CanUserAddRows="False"
+                              CanUserDeleteRows="False" IsReadOnly="True" CanUserReorderColumns="False"
+                              CanUserResizeColumns="False" Margin="0,23,-0.2,0.2">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Город" Binding="{Binding Path=Weather.CityName}"/>
-                            <DataGridTextColumn Header="Описание" Binding="{Binding Path=Weather.CondText}"/>
-                            <DataGridTextColumn Header="Температура" Binding="{Binding Path=Weather.Temperature}"/>
-                            <DataGridTextColumn Header="Давление" Binding="{Binding Path=Weather.Pressure}"/>
-                            <DataGridTextColumn Header="Влажность" Binding="{Binding Path=Weather.Humidity}"/>
+                            <DataGridTextColumn Header="Город" Binding="{Binding Path=Weather.CityName}" />
+                            <DataGridTextColumn Header="Описание" Binding="{Binding Path=Weather.CondText}" />
+                            <DataGridTextColumn Header="Температура" Binding="{Binding Path=Weather.Temperature}" />
+                            <DataGridTextColumn Header="Давление" Binding="{Binding Path=Weather.Pressure}" />
+                            <DataGridTextColumn Header="Влажность" Binding="{Binding Path=Weather.Humidity}" />
                         </DataGrid.Columns>
                         <DataGrid.RowStyle>
                             <Style TargetType="DataGridRow">
-                                <Setter Property="Background" Value="{Binding Path=BackgroundColor}"/>
+                                <Setter Property="Background" Value="{Binding Path=BackgroundColor}" />
                             </Style>
                         </DataGrid.RowStyle>
                     </DataGrid>
-                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="44"/>
-                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="64" Margin="44,0,0,0"/>
-                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="82" Margin="108,0,0,0"/>
-                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="64" Margin="190,0,0,0"/>
-                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="68" Margin="254,0,0,0"/>
+                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top"
+                             Width="44" />
+                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top"
+                             Width="64" Margin="44,0,0,0" />
+                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top"
+                             Width="82" Margin="108,0,0,0" />
+                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top"
+                             Width="64" Margin="190,0,0,0" />
+                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top"
+                             Width="68" Margin="254,0,0,0" />
                 </Grid>
             </TabItem>
             <TabItem Header="Статистика">
-                <Grid Background="#FFE5E5E5" />
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Тип диаграммы" Margin="10,10,10,0" VerticalAlignment="Top" Height="26" />
+                    <ComboBox Grid.Column="0" x:Name="ChartTypeCbx" Margin="10,36,10,0" VerticalAlignment="Top"
+                              SelectedIndex="0" Height="22">
+                        <ComboBoxItem>Столбчатая</ComboBoxItem>
+                        <ComboBoxItem>Круговая</ComboBoxItem>
+                    </ComboBox>
+
+                    <chartControls:BarChartControl Margin="11.6,10,-0.2,0" Grid.Column="1">
+                        <chartControls:BarChartControl.Style>
+                            <Style TargetType="{x:Type chartControls:BarChartControl}">
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding Path=SelectedItem.Content, ElementName=ChartTypeCbx}"
+                                        Value="Столбчатая">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                    <DataTrigger
+                                        Binding="{Binding Path=SelectedItem.Content, ElementName=ChartTypeCbx}"
+                                        Value="Круговая">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </chartControls:BarChartControl.Style>
+                    </chartControls:BarChartControl>
+                    <chartControls:PieChartControl Margin="0,63,-0.2,0" Grid.Column="1">
+                        <chartControls:PieChartControl.Style>
+                            <Style TargetType="{x:Type chartControls:PieChartControl}">
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding Path=SelectedItem.Content, ElementName=ChartTypeCbx}"
+                                        Value="Столбчатая">
+                                        <Setter Property="Visibility" Value="Collapsed" />
+                                    </DataTrigger>
+                                    <DataTrigger
+                                        Binding="{Binding Path=SelectedItem.Content, ElementName=ChartTypeCbx}"
+                                        Value="Круговая">
+                                        <Setter Property="Visibility" Value="Visible" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </chartControls:PieChartControl.Style>
+                    </chartControls:PieChartControl>
+                    <GroupBox Grid.Column="0" Header="Поля" Height="100" Margin="10,63,10,0" VerticalAlignment="Top">
+                        <StackPanel>
+                            <RadioButton Content="Температура" IsChecked="True" HorizontalAlignment="Left"
+                                         Margin="10,10,0,0" VerticalAlignment="Top" />
+                            <RadioButton Content="Влажность" HorizontalAlignment="Left" Margin="10,10,0,0"
+                                         VerticalAlignment="Top" />
+                            <RadioButton Content="Скорость ветра" HorizontalAlignment="Left" Margin="10,10,0,0"
+                                         VerticalAlignment="Top" />
+                        </StackPanel>
+                    </GroupBox>
+                    <Label Grid.Column="0" Content="Интервал" Margin="10,168,10,0" VerticalAlignment="Top" />
+                    <TextBox Grid.Column="0" Height="23" Margin="10,194,10.4,0" TextWrapping="Wrap" Text=""
+                             VerticalAlignment="Top" />
+                </Grid>
             </TabItem>
         </TabControl>
     </Grid>

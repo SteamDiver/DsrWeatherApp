@@ -1,9 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Data.Entity;
-using System.Threading.Tasks;
-using System.Windows;
-using WeatherApp.Data;
-using WeatherApp.Data.Models;
+﻿using System.Windows;
 
 namespace WeatherApp.GUI
 {
@@ -11,7 +6,7 @@ namespace WeatherApp.GUI
     ///     Логика взаимодействия для MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
-    { 
+    {
         public MainWindow()
         {
             InitializeComponent();

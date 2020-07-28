@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
 using System.Data.Entity.Migrations;
 using System.Diagnostics;
 using System.ServiceProcess;
@@ -43,23 +44,30 @@ namespace WeatherApp.Service
 
                     foreach (City city in cities.Locations)
                     {
-                        var response = await _apiClient.GetCurrentWeather(city.Key);
-                        EventLog.WriteEntry($"Data received: {response}");
-
-                        var cityReport = new CurrentWeather
+                        try
                         {
-                            City = response.Location.Name,
-                            CityName = city.Text,
-                            Temperature = response.CurrentWeather.Temperature,
-                            Humidity = response.CurrentWeather.Humidity,
-                            Pressure = response.CurrentWeather.Pressure,
-                            CondText = response.CurrentWeather.Condition.Text,
-                            CondIcon = response.CurrentWeather.Condition.Icon,
-                            WindDir = response.CurrentWeather.WindDir,
-                            WindSpeed = response.CurrentWeather.WindSpeed
-                        };
+                            var response = await _apiClient.GetCurrentWeather(city.Key);
+                            EventLog.WriteEntry($"Data received: {response}", EventLogEntryType.Information);
 
-                        await UpdateDb(cityReport);
+                            var cityReport = new CurrentWeather
+                            {
+                                City = response.Location.Name,
+                                CityName = city.Text,
+                                Temperature = response.CurrentWeather.Temperature,
+                                Humidity = response.CurrentWeather.Humidity,
+                                Pressure = response.CurrentWeather.Pressure,
+                                CondText = response.CurrentWeather.Condition.Text,
+                                CondIcon = response.CurrentWeather.Condition.Icon,
+                                WindDir = response.CurrentWeather.WindDir,
+                                WindSpeed = response.CurrentWeather.WindSpeed
+                            };
+
+                            await UpdateDb(cityReport);
+                        }
+                        catch(Exception ex)
+                        {
+                            EventLog.WriteEntry(ex.Message, EventLogEntryType.Error);
+                        }
                     }
 
                     Thread.Sleep(60 * 60 * 1000);
