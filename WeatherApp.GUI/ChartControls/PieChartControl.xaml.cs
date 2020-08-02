@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using LiveCharts;
 using LiveCharts.Wpf;
@@ -11,18 +10,18 @@ namespace WeatherApp.GUI.ChartControls
     /// </summary>
     public partial class PieChartControl : UserControl
     {
+        public static readonly DependencyProperty DataProperty =
+            DependencyProperty.Register("PieSeriesCollection", typeof(SeriesCollection),
+                typeof(PieChartControl), new FrameworkPropertyMetadata(null));
+
         public PieChartControl()
         {
             InitializeComponent();
         }
 
-        public static readonly DependencyProperty DataProperty =
-            DependencyProperty.Register("PieSeriesCollection", typeof(SeriesCollection),
-                typeof(PieChartControl), new FrameworkPropertyMetadata(null));
-        
         public SeriesCollection PieSeriesCollection
         {
-            get => (SeriesCollection)GetValue(DataProperty);
+            get => (SeriesCollection) GetValue(DataProperty);
             set => SetValue(DataProperty, value);
         }
 

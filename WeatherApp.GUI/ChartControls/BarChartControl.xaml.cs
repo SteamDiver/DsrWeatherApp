@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Runtime.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using LiveCharts;
-using LiveCharts.Wpf;
 
 namespace WeatherApp.GUI.ChartControls
 {
@@ -12,12 +10,6 @@ namespace WeatherApp.GUI.ChartControls
     /// </summary>
     public partial class BarChartControl : UserControl
     {
-        public BarChartControl()
-        {
-            InitializeComponent();
-            Formatter = value => value.ToString("N");
-        }
-
         public static readonly DependencyProperty DataProperty =
             DependencyProperty.Register("BarSeriesCollection", typeof(SeriesCollection),
                 typeof(BarChartControl), new FrameworkPropertyMetadata(null));
@@ -25,6 +17,12 @@ namespace WeatherApp.GUI.ChartControls
         public static readonly DependencyProperty LabelsProperty =
             DependencyProperty.Register("BarLabels", typeof(string[]),
                 typeof(BarChartControl), new FrameworkPropertyMetadata(null));
+
+        public BarChartControl()
+        {
+            InitializeComponent();
+            Formatter = value => value.ToString("N");
+        }
 
         public SeriesCollection BarSeriesCollection
         {
@@ -39,6 +37,5 @@ namespace WeatherApp.GUI.ChartControls
         }
 
         public Func<double, string> Formatter { get; set; }
-
     }
 }

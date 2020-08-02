@@ -9,7 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800"
              x:Name="PieChart">
     <Grid>
-        <wpf:PieChart LegendLocation="Right" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}" Series="{Binding PieSeriesCollection, ElementName=PieChart}">
-        </wpf:PieChart>
+        <wpf:PieChart LegendLocation="Right" DataClick="Chart_OnDataClick" Hoverable="False" DataTooltip="{x:Null}"
+                      Series="{Binding PieSeriesCollection, ElementName=PieChart}" />
     </Grid>
 </UserControl>

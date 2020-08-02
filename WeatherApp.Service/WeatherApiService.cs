@@ -43,7 +43,6 @@ namespace WeatherApp.Service
                     var cities = (LocationConfigurationSection) ConfigurationManager.GetSection("locations");
 
                     foreach (City city in cities.Locations)
-                    {
                         try
                         {
                             var response = await _apiClient.GetCurrentWeather(city.Key);
@@ -64,11 +63,10 @@ namespace WeatherApp.Service
 
                             await UpdateDb(cityReport);
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             EventLog.WriteEntry(ex.Message, EventLogEntryType.Error);
                         }
-                    }
 
                     Thread.Sleep(60 * 60 * 1000);
                 }

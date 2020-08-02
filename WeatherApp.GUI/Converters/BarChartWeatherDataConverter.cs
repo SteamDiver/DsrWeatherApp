@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
-using System.Windows.Automation.Peers;
 using System.Windows.Data;
 using LiveCharts;
 using LiveCharts.Wpf;
@@ -27,26 +25,26 @@ namespace WeatherApp.GUI.Converters
                 switch (parameter)
                 {
                     case "Temperature":
-                        groups = data.OrderBy(x=>x.Weather.Temperature).Select(x=>x.Weather).GroupBy(x => x.Temperature);
+                        groups = data.OrderBy(x => x.Weather.Temperature).Select(x => x.Weather)
+                            .GroupBy(x => x.Temperature);
                         break;
                     case "Humidity":
                         groups = data.OrderBy(x => x.Weather.Humidity).Select(x => x.Weather).GroupBy(x => x.Humidity);
                         break;
                     case "WindSpeed":
-                        groups = data.OrderBy(x => x.Weather.WindSpeed).Select(x => x.Weather).GroupBy(x => x.WindSpeed);
+                        groups = data.OrderBy(x => x.Weather.WindSpeed).Select(x => x.Weather)
+                            .GroupBy(x => x.WindSpeed);
                         break;
                 }
 
                 if (groups != null)
                     foreach (var group in groups)
-                    {
-                        seriesCollection.Add(new ColumnSeries()
+                        seriesCollection.Add(new ColumnSeries
                         {
-                            Title = group.Key.ToString(CultureInfo.InvariantCulture),
-                            Values = new ChartValues<int>() {group.Count()},
+                            Title = @group.Key.ToString(CultureInfo.InvariantCulture),
+                            Values = new ChartValues<int> {@group.Count()},
                             DataLabels = true
                         });
-                    }
 
                 return seriesCollection;
             }

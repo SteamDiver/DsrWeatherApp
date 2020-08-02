@@ -6,7 +6,7 @@ namespace WeatherApp.GUI.Helpers
     public static class ColorHelper
     {
         /// <summary>
-        /// Get brush for datagrid weather row
+        ///     Get brush for datagrid weather row
         /// </summary>
         /// <param name="minVal">min temperature</param>
         /// <param name="maxVal">max temperature</param>
@@ -21,7 +21,7 @@ namespace WeatherApp.GUI.Helpers
         }
 
         /// <summary>
-        /// Returns color from HSV model coords
+        ///     Returns color from HSV model coords
         /// </summary>
         /// <param name="hue"></param>
         /// <param name="saturation"></param>

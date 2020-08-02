@@ -4,8 +4,6 @@ using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Data;
-using LiveCharts;
-using LiveCharts.Wpf;
 using WeatherApp.GUI.Models;
 
 namespace WeatherApp.GUI.Converters
@@ -18,7 +16,7 @@ namespace WeatherApp.GUI.Converters
             {
                 var data = (ObservableCollection<CurrentWeatherRow>) value;
                 var labels = data
-                    .OrderBy(r=>r.Weather.Temperature)
+                    .OrderBy(r => r.Weather.Temperature)
                     .GroupBy(r => r.Weather.Temperature)
                     .Select(g => g.Key.ToString(CultureInfo.InvariantCulture)).ToArray();
 

@@ -25,28 +25,28 @@ namespace WeatherApp.GUI.Converters
                 switch (parameter)
                 {
                     case "Temperature":
-                        groups = data.OrderBy(x => x.Weather.Temperature).Select(x => x.Weather).GroupBy(x => x.Temperature);
+                        groups = data.OrderBy(x => x.Weather.Temperature).Select(x => x.Weather)
+                            .GroupBy(x => x.Temperature);
                         break;
                     case "Humidity":
                         groups = data.OrderBy(x => x.Weather.Humidity).Select(x => x.Weather).GroupBy(x => x.Humidity);
                         break;
                     case "WindSpeed":
-                        groups = data.OrderBy(x => x.Weather.WindSpeed).Select(x => x.Weather).GroupBy(x => x.WindSpeed);
+                        groups = data.OrderBy(x => x.Weather.WindSpeed).Select(x => x.Weather)
+                            .GroupBy(x => x.WindSpeed);
                         break;
                 }
 
                 if (groups != null)
                     foreach (var group in groups)
-                    {
-                        seriesCollection.Add(new PieSeries()
+                        seriesCollection.Add(new PieSeries
                         {
-                            Values = new ChartValues<int>() {@group.Count()},
+                            Values = new ChartValues<int> {@group.Count()},
                             DataLabels = true,
                             LabelPoint = chartPoint =>
                                 $"{chartPoint.Y} ({chartPoint.Participation:P})",
                             Title = @group.Key.ToString(CultureInfo.InvariantCulture)
                         });
-                    }
 
                 return seriesCollection;
             }
