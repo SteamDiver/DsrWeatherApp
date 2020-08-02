@@ -22,6 +22,7 @@ namespace WeatherApp.GUI.Converters
                     .GroupBy(r => r.Weather.Temperature)
                     .Select(g => g.Key.ToString(CultureInfo.InvariantCulture)).ToArray();
 
+
                 return labels;
             }
 

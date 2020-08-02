@@ -24,7 +24,7 @@ namespace WeatherApp.GUI.Converters
                 {
                     seriesCollection.Add(new ColumnSeries()
                     {
-                        Title = group.Key.ToString(),
+                        Title = group.Key.ToString(CultureInfo.InvariantCulture),
                         Values = new ChartValues<int>(){group.Count()},
                         DataLabels = true
                     });

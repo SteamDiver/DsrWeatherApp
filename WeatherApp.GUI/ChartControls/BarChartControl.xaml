@@ -9,9 +9,9 @@
              d:DesignHeight="450" d:DesignWidth="800"
              x:Name="BarChart">
     <Grid>
-        <wpf:CartesianChart Series="{Binding BarSeriesCollection, ElementName=BarChart}" LegendLocation="Right">
+        <wpf:CartesianChart Series="{Binding Path=BarSeriesCollection, ElementName=BarChart}" LegendLocation="Right" DataTooltip="{x:Null}">
             <wpf:CartesianChart.AxisX>
-                <wpf:Axis Title="Температура" Labels="{Binding BarLabels, ElementName=BarChart}" />
+                <wpf:Axis Title="Температура" Labels="{Binding Path=BarLabels, ElementName=BarChart}" />
             </wpf:CartesianChart.AxisX>
             <wpf:CartesianChart.AxisY>
                 <wpf:Axis Title="Count" LabelFormatter="{Binding Formatter}" />
