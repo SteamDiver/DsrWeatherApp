@@ -15,7 +15,7 @@ namespace WeatherApp.GUI.ChartControls
         public BarChartControl()
         {
             InitializeComponent();
-            Formatter = value => value.ToString("N0");
+            Formatter = value => value.ToString("N");
         }
 
         public static readonly DependencyProperty DataProperty =

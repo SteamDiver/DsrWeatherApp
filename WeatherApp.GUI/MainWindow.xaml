@@ -5,12 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:chartControls="clr-namespace:WeatherApp.GUI.ChartControls"
         xmlns:converters="clr-namespace:WeatherApp.GUI.Converters"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
         <converters:BarChartWeatherDataConverter x:Key="BarChartWeatherDataConverter" />
         <converters:PieChartWeatherDataConverter x:Key="PieChartWeatherDataConverter" />
         <converters:BarChartWeatherLabelsConverter x:Key="BarChartWeatherLabelsConverter"/>
+
+        <system:String x:Key="Temperature">Temperature</system:String>
+        <system:String x:Key="Humidity">Humidity</system:String>
+        <system:String x:Key="WindSpeed">WindSpeed</system:String>
+
     </Window.Resources>
     <Grid>
         <TabControl Margin="10,10,9.6,10">
@@ -25,6 +31,8 @@
                             <DataGridTextColumn Header="Температура" Binding="{Binding Path=Weather.Temperature}" />
                             <DataGridTextColumn Header="Давление" Binding="{Binding Path=Weather.Pressure}" />
                             <DataGridTextColumn Header="Влажность" Binding="{Binding Path=Weather.Humidity}" />
+                            <DataGridTextColumn Header="Напр. ветра" Binding="{Binding Path=Weather.WindDir}" />
+                            <DataGridTextColumn Header="Скор. ветра" Binding="{Binding Path=Weather.WindSpeed}" />
                         </DataGrid.Columns>
                         <DataGrid.RowStyle>
                             <Style TargetType="DataGridRow">
@@ -58,7 +66,6 @@
                     </ComboBox>
 
                     <chartControls:BarChartControl Margin="11.6,10,-0.2,0" Grid.Column="1" 
-                                                   BarSeriesCollection="{Binding Weathers, Converter={StaticResource BarChartWeatherDataConverter}}"
                                                    BarLabels="{Binding Weathers, Converter={StaticResource BarChartWeatherLabelsConverter}}">
                         <chartControls:BarChartControl.Style>
                             <Style TargetType="{x:Type chartControls:BarChartControl}">
@@ -73,12 +80,26 @@
                                         Value="Круговая">
                                         <Setter Property="Visibility" Value="Collapsed" />
                                     </DataTrigger>
+                                    <DataTrigger
+                                        Binding="{Binding Path=IsChecked, ElementName=TemperatureRB}"
+                                        Value="True">
+                                        <Setter Property="BarSeriesCollection" Value="{Binding Weathers, Converter={StaticResource BarChartWeatherDataConverter}, ConverterParameter={StaticResource Temperature}}" />
+                                    </DataTrigger>
+                                    <DataTrigger
+                                        Binding="{Binding Path=IsChecked, ElementName=HumidityRB}"
+                                        Value="True">
+                                        <Setter Property="BarSeriesCollection"  Value="{Binding Weathers, Converter={StaticResource BarChartWeatherDataConverter}, ConverterParameter={StaticResource Humidity}}" />
+                                    </DataTrigger>
+                                    <DataTrigger
+                                        Binding="{Binding Path=IsChecked, ElementName=WindSpeedRB}"
+                                        Value="True">
+                                        <Setter Property="BarSeriesCollection"  Value="{Binding Weathers, Converter={StaticResource BarChartWeatherDataConverter}, ConverterParameter={StaticResource WindSpeed}}" />
+                                    </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </chartControls:BarChartControl.Style>
                     </chartControls:BarChartControl>
-                    <chartControls:PieChartControl Margin="0,63,-0.2,0" Grid.Column="1"
-                                                   PieSeriesCollection="{Binding Weathers, Converter={StaticResource PieChartWeatherDataConverter}}">
+                    <chartControls:PieChartControl Margin="0,63,-0.2,0" Grid.Column="1">
                         <chartControls:PieChartControl.Style>
                             <Style TargetType="{x:Type chartControls:PieChartControl}">
                                 <Style.Triggers>
@@ -92,17 +113,32 @@
                                         Value="Круговая">
                                         <Setter Property="Visibility" Value="Visible" />
                                     </DataTrigger>
+                                    <DataTrigger
+                                        Binding="{Binding Path=IsChecked, ElementName=TemperatureRB}"
+                                        Value="True">
+                                        <Setter Property="PieSeriesCollection" Value="{Binding Weathers, Converter={StaticResource PieChartWeatherDataConverter}, ConverterParameter={StaticResource Temperature}}" />
+                                    </DataTrigger>
+                                    <DataTrigger
+                                        Binding="{Binding Path=IsChecked, ElementName=HumidityRB}"
+                                        Value="True">
+                                        <Setter Property="PieSeriesCollection"  Value="{Binding Weathers, Converter={StaticResource PieChartWeatherDataConverter}, ConverterParameter={StaticResource Humidity}}" />
+                                    </DataTrigger>
+                                    <DataTrigger
+                                        Binding="{Binding Path=IsChecked, ElementName=WindSpeedRB}"
+                                        Value="True">
+                                        <Setter Property="PieSeriesCollection"  Value="{Binding Weathers, Converter={StaticResource PieChartWeatherDataConverter}, ConverterParameter={StaticResource WindSpeed}}" />
+                                    </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </chartControls:PieChartControl.Style>
                     </chartControls:PieChartControl>
                     <GroupBox Grid.Column="0" Header="Поля" Height="100" Margin="10,63,10,0" VerticalAlignment="Top">
                         <StackPanel>
-                            <RadioButton Content="Температура" IsChecked="True" HorizontalAlignment="Left"
+                            <RadioButton x:Name="TemperatureRB" Content="Температура" IsChecked="True" HorizontalAlignment="Left"
                                          Margin="10,10,0,0" VerticalAlignment="Top" />
-                            <RadioButton Content="Влажность" HorizontalAlignment="Left" Margin="10,10,0,0"
+                            <RadioButton x:Name="HumidityRB" Content="Влажность" HorizontalAlignment="Left" Margin="10,10,0,0"
                                          VerticalAlignment="Top" />
-                            <RadioButton Content="Скорость ветра" HorizontalAlignment="Left" Margin="10,10,0,0"
+                            <RadioButton x:Name="WindSpeedRB" Content="Скорость ветра" HorizontalAlignment="Left" Margin="10,10,0,0"
                                          VerticalAlignment="Top" />
                         </StackPanel>
                     </GroupBox>

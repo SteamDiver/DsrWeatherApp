@@ -11,10 +11,10 @@
     <Grid>
         <wpf:CartesianChart Series="{Binding Path=BarSeriesCollection, ElementName=BarChart}" LegendLocation="Right" DataTooltip="{x:Null}">
             <wpf:CartesianChart.AxisX>
-                <wpf:Axis Title="Температура" Labels="{Binding Path=BarLabels, ElementName=BarChart}" />
+                <wpf:Axis Labels="{Binding Path=BarLabels, ElementName=BarChart}" />
             </wpf:CartesianChart.AxisX>
             <wpf:CartesianChart.AxisY>
-                <wpf:Axis Title="Count" LabelFormatter="{Binding Formatter}" />
+                <wpf:Axis Title="Count" LabelFormatter="{Binding Formatter, ElementName=BarChart}" />
             </wpf:CartesianChart.AxisY>
         </wpf:CartesianChart>
     </Grid>
