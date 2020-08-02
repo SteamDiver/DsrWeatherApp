@@ -30,6 +30,7 @@ namespace WeatherApp.GUI.ChartControls
             set => SetValue(DataProperty, value);
         }
 
+        
         public string[] BarLabels
         {
             get => (string[]) GetValue(LabelsProperty);

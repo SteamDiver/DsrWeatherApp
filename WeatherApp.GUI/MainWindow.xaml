@@ -7,7 +7,7 @@
         xmlns:converters="clr-namespace:WeatherApp.GUI.Converters"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="DsrWeatherApp" Height="450" Width="800">
     <Window.Resources>
         <converters:BarChartWeatherDataConverter x:Key="BarChartWeatherDataConverter" />
         <converters:PieChartWeatherDataConverter x:Key="PieChartWeatherDataConverter" />
@@ -65,8 +65,7 @@
                         <ComboBoxItem>Круговая</ComboBoxItem>
                     </ComboBox>
 
-                    <chartControls:BarChartControl Margin="10,10,0,0" Grid.Column="1"
-                                                   BarLabels="{Binding Weathers, Converter={StaticResource BarChartWeatherLabelsConverter}}">
+                    <chartControls:BarChartControl Margin="10,10,0,0" Grid.Column="1" BarLabels="{Binding Weathers, Converter={StaticResource BarChartWeatherLabelsConverter}}">
                         <chartControls:BarChartControl.Style>
                             <Style TargetType="{x:Type chartControls:BarChartControl}">
                                 <Style.Triggers>
