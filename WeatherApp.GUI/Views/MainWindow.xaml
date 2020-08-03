@@ -7,7 +7,7 @@
         xmlns:converters="clr-namespace:WeatherApp.GUI.Converters"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="DsrWeatherApp" Height="450" Width="800"
+        Title="DsrWeatherApp" Height="501.733" Width="800"
         MinHeight="450"
         MinWidth="800">
     <Window.Resources>
@@ -24,9 +24,14 @@
         <TabControl Margin="10,10,9.6,10">
             <TabItem Header="Данные">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid ItemsSource="{Binding Weathers}" AutoGenerateColumns="False" CanUserAddRows="False"
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="153" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <DataGrid ItemsSource="{Binding WeathersView.View}" AutoGenerateColumns="False"
+                              CanUserAddRows="False"
                               CanUserDeleteRows="False" IsReadOnly="True" CanUserReorderColumns="False"
-                              CanUserResizeColumns="False" Margin="108,23,-0.2,0">
+                              CanUserResizeColumns="False" Margin="6.2,23,0,0" Grid.Column="1">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Город" Binding="{Binding Path=Weather.CityName}" />
                             <DataGridTextColumn Header="Описание" Binding="{Binding Path=Weather.CondText}" />
@@ -42,16 +47,41 @@
                             </Style>
                         </DataGrid.RowStyle>
                     </DataGrid>
-                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top"
-                             Width="44" />
-                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top"
-                             Width="64" Margin="44,0,0,0" />
-                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top"
-                             Width="82" Margin="108,0,0,0" />
-                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top"
-                             Width="64" Margin="190,0,0,0" />
-                    <TextBox HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top"
-                             Width="68" Margin="254,0,0,0" />
+
+                    <GroupBox Grid.Column="0" Header="GroupBox" Height="404" Margin="10,10,0,0"
+                              VerticalAlignment="Top">
+                        <Grid>
+                            <Label Grid.Column="0" Content="Город" Margin="10,10,11.2,0" VerticalAlignment="Top"
+                                   Height="26" />
+
+                            <TextBox Grid.Column="0" Height="23" TextWrapping="Wrap" VerticalAlignment="Top"
+                                     Text="{Binding Path=Filter.CityName}" Margin="10,36,10,0" />
+                            <TextBox Grid.Column="0" Height="23" TextWrapping="Wrap" VerticalAlignment="Top"
+                                     Margin="10,90,10,0"
+                                     Text="{Binding Path=Filter.Temperature}" />
+                            <TextBox Grid.Column="0" Height="23" TextWrapping="Wrap" VerticalAlignment="Top"
+                                     Margin="10,144,10,0"
+                                     Text="{Binding Path=Filter.Humidity}" />
+                            <TextBox Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Margin="10,198,10,0"
+                                     Text="{Binding Path=Filter.Pressure}" />
+                            <TextBox Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Margin="10,252,10,0"
+                                     Text="{Binding Path=Filter.WindDir}" />
+                            <TextBox Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Margin="10,306,10,0"
+                                     Text="{Binding Path=Filter.WindSpeed}" />
+                            <Button Content="Применить" Margin="12,347,10.2,9.8" Command="{Binding FilterCommand}" />
+                            <Label Grid.Column="0" Content="Температура" Margin="10,64,10,0" VerticalAlignment="Top"
+                                   Height="26" />
+                            <Label Grid.Column="0" Content="Влажность" Margin="10,118,10,0" VerticalAlignment="Top"
+                                   Height="26" />
+                            <Label Grid.Column="0" Content="Давление" Margin="10,172,10,0" VerticalAlignment="Top"
+                                   Height="26" />
+                            <Label Grid.Column="0" Content="Напр. ветра" Margin="10,226,10,0" VerticalAlignment="Top"
+                                   Height="26" />
+                            <Label Grid.Column="0" Content="Скор. ветра" Margin="10,280,10,0" VerticalAlignment="Top"
+                                   Height="26" />
+                        </Grid>
+                    </GroupBox>
+
                 </Grid>
             </TabItem>
             <TabItem Header="Статистика">
