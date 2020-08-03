@@ -1,6 +1,7 @@
 ﻿using System.Windows;
+using WeatherApp.GUI.ViewModels;
 
-namespace WeatherApp.GUI
+namespace WeatherApp.GUI.Views
 {
     /// <summary>
     ///     Логика взаимодействия для MainWindow.xaml

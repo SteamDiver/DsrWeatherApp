@@ -4,7 +4,7 @@ using WeatherApp.Data;
 using WeatherApp.GUI.Helpers;
 using WeatherApp.GUI.Models;
 
-namespace WeatherApp.GUI
+namespace WeatherApp.GUI.ViewModels
 {
     public class ApplicationViewModel : ViewModel
     {
@@ -20,14 +20,17 @@ namespace WeatherApp.GUI
             using (var dataContext = new DataContext())
             {
                 var weather = dataContext.CurrentWeather.ToList();
-                var minTemp = weather.Min(w => w.Temperature);
-                var maxTemp = weather.Max(w => w.Temperature);
-
-                Weathers = new ObservableCollection<CurrentWeatherRow>(weather.Select(r => new CurrentWeatherRow
+                if (weather?.Count > 0)
                 {
-                    BackgroundColor = ColorHelper.GetWeatherRowColor(minTemp, maxTemp, r.Temperature),
-                    Weather = r
-                }));
+                    var minTemp = weather.Min(w => w.Temperature);
+                    var maxTemp = weather.Max(w => w.Temperature);
+
+                    Weathers = new ObservableCollection<CurrentWeatherRow>(weather.Select(record => new CurrentWeatherRow
+                    {
+                        BackgroundColor = ColorHelper.GetWeatherRowColor(minTemp, maxTemp, record.Temperature),
+                        Weather = record
+                    }));
+                }
             }
         }
     }

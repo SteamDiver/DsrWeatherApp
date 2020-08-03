@@ -32,7 +32,7 @@ using System;
 // ReSharper disable MemberCanBeProtected.Global
 // ReSharper disable InconsistentNaming
 
-namespace WeatherApp.GUI.Annotations
+namespace WeatherApp.GUI.Properties
 {
     /// <summary>
     ///     Indicates that the value of the marked element could be <c>null</c> sometimes,

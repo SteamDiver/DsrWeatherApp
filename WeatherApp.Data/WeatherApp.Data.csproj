@@ -60,11 +60,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Database\WeatherAppDb.bak" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Database\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202007260752280_init.resx">
       <DependentUpon>202007260752280_init.cs</DependentUpon>

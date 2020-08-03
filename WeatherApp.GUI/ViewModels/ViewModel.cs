@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using WeatherApp.GUI.Annotations;
+using WeatherApp.GUI.Properties;
 
-namespace WeatherApp.GUI
+namespace WeatherApp.GUI.ViewModels
 {
-    public class ViewModel : INotifyPropertyChanged
+    public abstract class ViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -1,4 +1,4 @@
-﻿<Window x:Class="WeatherApp.GUI.MainWindow"
+﻿<Window x:Class="WeatherApp.GUI.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,7 +7,9 @@
         xmlns:converters="clr-namespace:WeatherApp.GUI.Converters"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="DsrWeatherApp" Height="450" Width="800">
+        Title="DsrWeatherApp" Height="450" Width="800"
+        MinHeight="450"
+        MinWidth="800">
     <Window.Resources>
         <converters:BarChartWeatherDataConverter x:Key="BarChartWeatherDataConverter" />
         <converters:PieChartWeatherDataConverter x:Key="PieChartWeatherDataConverter" />
@@ -24,7 +26,7 @@
                 <Grid Background="#FFE5E5E5">
                     <DataGrid ItemsSource="{Binding Weathers}" AutoGenerateColumns="False" CanUserAddRows="False"
                               CanUserDeleteRows="False" IsReadOnly="True" CanUserReorderColumns="False"
-                              CanUserResizeColumns="False" Margin="0,23,-0.2,0.2">
+                              CanUserResizeColumns="False" Margin="108,23,-0.2,0">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Город" Binding="{Binding Path=Weather.CityName}" />
                             <DataGridTextColumn Header="Описание" Binding="{Binding Path=Weather.CondText}" />
@@ -65,7 +67,8 @@
                         <ComboBoxItem>Круговая</ComboBoxItem>
                     </ComboBox>
 
-                    <chartControls:BarChartControl Margin="10,10,0,0" Grid.Column="1" BarLabels="{Binding Weathers, Converter={StaticResource BarChartWeatherLabelsConverter}}">
+                    <chartControls:BarChartControl Margin="10,10,0,0" Grid.Column="1"
+                                                   BarLabels="{Binding Weathers, Converter={StaticResource BarChartWeatherLabelsConverter}}">
                         <chartControls:BarChartControl.Style>
                             <Style TargetType="{x:Type chartControls:BarChartControl}">
                                 <Style.Triggers>
