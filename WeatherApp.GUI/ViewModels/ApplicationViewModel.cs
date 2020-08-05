@@ -14,6 +14,12 @@ namespace WeatherApp.GUI.ViewModels
 {
     public class ApplicationViewModel : ViewModel
     {
+        public ObservableCollection<CurrentWeatherRow> Weathers { get; private set; }
+
+        public CollectionViewSource WeathersView { get; set; }
+
+        public Filter Filter { get; set; }
+
         public ApplicationViewModel()
         {
             Filter = new Filter();
@@ -22,19 +28,7 @@ namespace WeatherApp.GUI.ViewModels
             WeathersView.Filter += WeathersViewSourceOnFilter;
         }
 
-        private void WeathersViewSourceOnFilter(object sender, FilterEventArgs e)
-        {
-            e.Accepted = Filter.GetFilter((CurrentWeatherRow) e.Item);
-        }
-
-        public ObservableCollection<CurrentWeatherRow> Weathers { get; private set; }
-
-        public CollectionViewSource WeathersView { get; set; }
-
-        public Filter Filter { get; set; }
-
         private RelayCommand _filterCommand;
-
         public RelayCommand FilterCommand
         {
             get
@@ -46,6 +40,23 @@ namespace WeatherApp.GUI.ViewModels
                        }));
             }
         }
+
+        private RelayCommand _clearFilterCommand;
+        public RelayCommand ClearFilterCommand
+        {
+            get
+            {
+                return _clearFilterCommand ??
+                       (_clearFilterCommand = new RelayCommand(obj =>
+                       {
+                           Filter = new Filter();
+                           base.OnPropertyChanged("Filter");
+                           WeathersView.View.Refresh();
+                       }));
+            }
+        }
+
+        
 
         public void RefreshData()
         {
@@ -62,6 +73,11 @@ namespace WeatherApp.GUI.ViewModels
                         Weather = record
                     }));
             }
+        }
+
+        private void WeathersViewSourceOnFilter(object sender, FilterEventArgs e)
+        {
+            e.Accepted = Filter.GetFilter((CurrentWeatherRow)e.Item);
         }
     }
 }

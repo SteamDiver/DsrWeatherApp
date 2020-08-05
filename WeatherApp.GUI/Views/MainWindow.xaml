@@ -7,8 +7,8 @@
         xmlns:converters="clr-namespace:WeatherApp.GUI.Converters"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="DsrWeatherApp" Height="501.733" Width="800"
-        MinHeight="450"
+        Title="DsrWeatherApp" Height="560" Width="800"
+        MinHeight="560"
         MinWidth="800">
     <Window.Resources>
         <converters:BarChartWeatherDataConverter x:Key="BarChartWeatherDataConverter" />
@@ -48,7 +48,7 @@
                         </DataGrid.RowStyle>
                     </DataGrid>
 
-                    <GroupBox Grid.Column="0" Header="GroupBox" Height="404" Margin="10,10,0,0"
+                    <GroupBox Grid.Column="0" Header="Фильтр" Height="429" Margin="10,10,9.8,0"
                               VerticalAlignment="Top">
                         <Grid>
                             <Label Grid.Column="0" Content="Город" Margin="10,10,11.2,0" VerticalAlignment="Top"
@@ -68,7 +68,7 @@
                                      Text="{Binding Path=Filter.WindDir}" />
                             <TextBox Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Margin="10,306,10,0"
                                      Text="{Binding Path=Filter.WindSpeed}" />
-                            <Button Content="Применить" Margin="12,347,10.2,9.8" Command="{Binding FilterCommand}" />
+                            <Button Content="Применить" Margin="12,0,10.2,36.4" Command="{Binding FilterCommand}" Height="26" VerticalAlignment="Bottom" />
                             <Label Grid.Column="0" Content="Температура" Margin="10,64,10,0" VerticalAlignment="Top"
                                    Height="26" />
                             <Label Grid.Column="0" Content="Влажность" Margin="10,118,10,0" VerticalAlignment="Top"
@@ -79,6 +79,7 @@
                                    Height="26" />
                             <Label Grid.Column="0" Content="Скор. ветра" Margin="10,280,10,0" VerticalAlignment="Top"
                                    Height="26" />
+                            <Button Content="Сбросить" Margin="12,0,10.2,10.4" Command="{Binding ClearFilterCommand}" Height="26" VerticalAlignment="Bottom" />
                         </Grid>
                     </GroupBox>
 
