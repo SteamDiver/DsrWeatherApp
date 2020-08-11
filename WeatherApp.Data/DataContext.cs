@@ -6,7 +6,7 @@ namespace WeatherApp.Data
     public class DataContext : DbContext
     {
         public DataContext()
-            : base(@"Data Source=localhost;Initial Catalog=WeatherAppDb;Integrated Security=True")
+            : base(@"Data Source=localhost\SQLEXPRESS;Initial Catalog=WeatherAppDb;Integrated Security=True")
         {
         }
 
